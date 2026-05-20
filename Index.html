@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestión Ambiental Empresarial</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --b1:#020D06;--b2:#051A0C;--b3:#0A2E1A;--b4:#12472A;--b5:#1A6638;
+  --g1:#22A159;--g2:#3DC97A;--g3:#6FE09E;--g4:#B8F5D0;--g5:#E6FAF0;
+  --d1:#8B5E1A;--d2:#C8903A;--d3:#F0C060;--d4:#FAE0A0;
+  --cream:#F8F5EE;--sand:#EDE6D9;--stone:#D4CBC0;
+  --tx:#0E1A12;--txm:#3D5445;--txs:#6B8070;
+  --r:16px;--r2:24px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Syne',sans-serif;background:var(--cream);color:var(--tx);overflow-x:hidden;line-height:1.7}
+#prog{position:fixed;top:0;left:0;height:2px;z-index:9999;width:0%;background:linear-gradient(90deg,var(--g1),var(--d3));transition:width .08s}
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35}
+nav{position:fixed;top:0;left:0;right:0;z-index:600;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 3.5rem;transition:all .5s}
+nav.scrolled{background:rgba(2,13,6,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:#fff;letter-spacing:.05em;font-style:italic;opacity:0;transition:opacity .4s}
+nav.scrolled .nav-logo{opacity:1}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;transition:color .25s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--d3);transition:width .3s}
+.nav-links a:hover{color:#fff}.nav-links a:hover::after{width:100%}
+.hero{height:100vh;min-height:700px;position:relative;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:var(--b1)}
+.hero-mesh{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(26,102,56,.45) 0%,transparent 70%),radial-gradient(ellipse 60% 50% at 20% 80%,rgba(10,46,26,.6) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 80% 10%,rgba(200,144,58,.08) 0%,transparent 50%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 30%,transparent 100%)}
+.hero-content{position:relative;z-index:2;padding:0 6rem;display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;align-items:center;width:100%}
+.hero-tag{display:inline-flex;align-items:center;gap:.6rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(8px);padding:6px 16px 6px 8px;border-radius:30px;margin-bottom:2rem}
+.hero-tag-dot{width:6px;height:6px;border-radius:50%;background:var(--g2);animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+.hero-tag span{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:600}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(3.2rem,5.5vw,5.8rem);font-weight:900;color:#fff;line-height:.98;margin-bottom:1.8rem;letter-spacing:-.02em}
+.hero h1 .line2{display:block;color:var(--d3);font-style:italic;font-weight:700}
+.hero h1 .line3{display:block;-webkit-text-stroke:1px rgba(255,255,255,.4);color:transparent}
+.hero-desc{font-size:1rem;color:rgba(255,255,255,.6);max-width:480px;margin-bottom:2.5rem;line-height:1.85;font-weight:400}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+.cta-main{background:linear-gradient(135deg,var(--d2),var(--d3));color:var(--b1);padding:14px 30px;border-radius:8px;text-decoration:none;font-weight:700;font-size:.84rem;letter-spacing:.06em;text-transform:uppercase;transition:all .3s;border:none;cursor:pointer;position:relative;overflow:hidden}
+.cta-main::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--d3),var(--d4));opacity:0;transition:opacity .3s}
+.cta-main:hover::before{opacity:1}.cta-main span{position:relative}
+.cta-sec{border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);padding:14px 30px;border-radius:8px;text-decoration:none;font-weight:500;font-size:.84rem;letter-spacing:.06em;text-transform:uppercase;transition:all .3s;background:rgba(255,255,255,.04);backdrop-filter:blur(8px)}
+.cta-sec:hover{border-color:rgba(255,255,255,.5);color:#fff;background:rgba(255,255,255,.08)}
+.hero-right{display:flex;align-items:center;justify-content:center}
+.hero-orb{width:380px;height:380px;position:relative}
+.orb-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,255,255,.06);animation:spin 30s linear infinite}
+.orb-ring:nth-child(2){inset:30px;border-color:rgba(200,144,58,.12);animation-duration:20s;animation-direction:reverse}
+.orb-ring:nth-child(3){inset:60px;border-color:rgba(61,201,122,.1);animation-duration:15s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orb-center{position:absolute;inset:80px;border-radius:50%;background:radial-gradient(circle,rgba(26,102,56,.4),rgba(10,46,26,.2));display:flex;align-items:center;justify-content:center;flex-direction:column;border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(4px)}
+.orb-leaf{font-size:3.5rem;animation:float 4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-12px) rotate(5deg)}}
+.orb-lbl{font-family:'Playfair Display',serif;font-size:.85rem;color:rgba(255,255,255,.6);text-align:center;margin-top:.4rem;font-style:italic}
+.orb-dot{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--g2)}
+.orb-dot:nth-child(5){top:15%;left:50%;transform:translateX(-50%);animation:orbDot 3s ease infinite}
+.orb-dot:nth-child(6){top:50%;right:10%;animation:orbDot 3s .5s ease infinite}
+.orb-dot:nth-child(7){bottom:15%;left:50%;transform:translateX(-50%);animation:orbDot 3s 1s ease infinite}
+.orb-dot:nth-child(8){top:50%;left:10%;animation:orbDot 3s 1.5s ease infinite;background:var(--d3)}
+@keyframes orbDot{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(1.8)}}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.4));position:relative;overflow:hidden}
+.scroll-line::after{content:'';position:absolute;top:-100%;width:100%;height:100%;background:linear-gradient(to bottom,transparent,#fff,transparent);animation:scrollAnim 2.2s ease infinite}
+@keyframes scrollAnim{to{top:200%}}
+.scroll-txt{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--b2);border-top:1px solid rgba(255,255,255,.04)}
+.s-item{padding:2.2rem 1.5rem;text-align:center;border-right:1px solid rgba(255,255,255,.05);position:relative;overflow:hidden;transition:background .3s;cursor:default}
+.s-item:last-child{border-right:none}
+.s-item::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,rgba(61,201,122,.06),transparent 70%);opacity:0;transition:opacity .3s}
+.s-item:hover{background:rgba(255,255,255,.02)}.s-item:hover::before{opacity:1}
+.s-num{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--d3);line-height:1;display:block}
+.s-lbl{font-size:.72rem;color:rgba(255,255,255,.4);margin-top:.5rem;letter-spacing:.08em;display:block}
+section{padding:7rem 6rem;position:relative}
+.eyebrow{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+.ey-line{width:32px;height:2px;background:linear-gradient(90deg,var(--g1),transparent);border-radius:2px}
+.eyebrow span{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g1);font-weight:700}
+h2.sec-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:900;color:var(--b3);line-height:1.1;margin-bottom:1.1rem;letter-spacing:-.02em}
+.sec-lead{color:var(--txm);font-size:1rem;font-weight:400;max-width:600px;margin-bottom:3.5rem;line-height:1.9}
+.que-wrap{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.que-txt p{color:var(--txm);font-size:.97rem;line-height:1.9;margin-bottom:1.25rem}
+.pilares{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-top:2.2rem}
+.pilar{padding:1.35rem;border-radius:var(--r);border:1px solid var(--stone);background:#fff;position:relative;overflow:hidden;transition:all .3s;cursor:default}
+.pilar::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--g5),#fff);opacity:0;transition:opacity .3s}
+.pilar:hover{transform:translateY(-4px);border-color:var(--g3)}.pilar:hover::before{opacity:1}
+.pilar>*{position:relative}
+.pilar-ico{font-size:1.6rem;margin-bottom:.55rem;display:block}
+.pilar h4{font-size:.85rem;font-weight:700;color:var(--b3);margin-bottom:.3rem}
+.pilar p{font-size:.78rem;color:var(--txs);line-height:1.55}
+.que-visual{display:grid;gap:1rem}
+.vis-card-main{background:linear-gradient(135deg,var(--b3) 0%,var(--b5) 100%);border-radius:var(--r2);padding:2.5rem;position:relative;overflow:hidden;min-height:220px;display:flex;flex-direction:column;justify-content:flex-end}
+.vis-card-main::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 80% 20%,rgba(200,144,58,.2),transparent)}
+.vis-bg-text{position:absolute;top:-.5rem;right:1rem;font-family:'Playfair Display',serif;font-size:8rem;font-weight:900;color:rgba(255,255,255,.04);line-height:1;pointer-events:none}
+.vis-tag{display:inline-block;background:rgba(200,144,58,.2);border:1px solid rgba(200,144,58,.35);color:var(--d3);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:.75rem;font-weight:600}
+.vis-card-main h3{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;line-height:1.2;margin-bottom:.4rem}
+.vis-card-main p{font-size:.82rem;color:rgba(255,255,255,.65);line-height:1.6}
+.vis-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.vis-mini{border-radius:var(--r);padding:1.25rem;display:flex;flex-direction:column;align-items:center;text-align:center;border:1px solid var(--stone);background:#fff;transition:transform .25s,border-color .25s;cursor:default}
+.vis-mini:hover{transform:translateY(-3px);border-color:var(--g3)}
+.vis-mini span{font-size:1.8rem;margin-bottom:.5rem}
+.vis-mini h4{font-size:.8rem;font-weight:700;color:var(--b3);margin-bottom:.2rem}
+.vis-mini p{font-size:.72rem;color:var(--txs);line-height:1.45}
+.sec-night{background:var(--b1);position:relative;overflow:hidden}
+.sec-night::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 50%,rgba(26,102,56,.2),transparent),radial-gradient(ellipse 60% 60% at 80% 80%,rgba(200,144,58,.06),transparent)}
+.sec-night .ey-line{background:linear-gradient(90deg,var(--d3),transparent)}
+.sec-night .eyebrow span{color:var(--d3)}
+.sec-night h2.sec-title{color:#fff}
+.sec-night .sec-lead{color:rgba(255,255,255,.5)}
+.princip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.pc{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:2rem;transition:all .3s;cursor:default;position:relative;overflow:hidden}
+.pc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--g1),var(--d3));transform:scaleX(0);transition:transform .4s;transform-origin:left}
+.pc:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);transform:translateY(-4px)}.pc:hover::after{transform:scaleX(1)}
+.pc-n{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:900;color:rgba(255,255,255,.04);line-height:1;margin-bottom:.5rem}
+.pc-ico{font-size:1.5rem;margin-bottom:.75rem;display:block}
+.pc-title{font-size:.92rem;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:.6rem}
+.pc-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.85rem}
+.pc-tag{font-size:.65rem;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);padding:3px 9px;border-radius:20px;border:1px solid rgba(255,255,255,.08)}
+.pc-desc{font-size:.8rem;color:rgba(255,255,255,.42);line-height:1.65}
+.phva-wrap{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.phva-btns{display:flex;flex-direction:column;gap:.75rem}
+.phva-btn{display:flex;gap:1.1rem;align-items:flex-start;padding:1.25rem 1.5rem;border-radius:var(--r);border:1px solid var(--stone);background:#fff;cursor:pointer;transition:all .28s;text-align:left;position:relative;overflow:hidden;width:100%}
+.phva-btn::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:transparent;transition:background .25s}
+.phva-btn:hover,.phva-btn.on{border-color:transparent;background:var(--b3)}
+.phva-btn:hover::before,.phva-btn.on::before{background:var(--d3)}
+.phva-letter{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;flex-shrink:0}
+.phva-btn h3{font-size:.9rem;font-weight:700;margin-bottom:.2rem;color:var(--b3);transition:color .25s}
+.phva-btn p{font-size:.78rem;color:var(--txs);line-height:1.5;transition:color .25s}
+.phva-btn.on h3,.phva-btn:hover h3{color:#fff}
+.phva-btn.on p,.phva-btn:hover p{color:rgba(255,255,255,.6)}
+.phva-panel{position:sticky;top:88px}
+.phva-card{background:var(--b1);border-radius:var(--r2);padding:2.5rem;min-height:340px;border:1px solid rgba(255,255,255,.06);position:relative;overflow:hidden;transition:border-color .3s}
+.phva-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 80% 20%,rgba(26,102,56,.25),transparent)}
+.phva-card-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:1rem}
+.phva-card h4{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:1.2rem;line-height:1.1}
+.phva-card ul{list-style:none}
+.phva-card ul li{font-size:.84rem;color:rgba(255,255,255,.6);padding:7px 0 7px 1.3rem;position:relative;border-bottom:1px solid rgba(255,255,255,.05)}
+.phva-card ul li:last-child{border:none}
+.phva-card ul li::before{content:'→';position:absolute;left:0;color:var(--g2);font-size:.75rem;top:9px}
+.phva-hint{text-align:center;font-size:.78rem;color:var(--txs);font-style:italic;margin-top:.75rem}
+.phva-eco{background:linear-gradient(135deg,var(--b3),var(--b4));border-radius:var(--r);padding:1.5rem;margin-top:1rem;display:flex;align-items:center;gap:1rem;border:1px solid rgba(255,255,255,.06)}
+.phva-eco-ico{font-size:2rem;flex-shrink:0}
+.phva-eco h5{font-size:.82rem;font-weight:700;color:var(--d3);margin-bottom:.2rem}
+.phva-eco p{font-size:.76rem;color:rgba(255,255,255,.55);line-height:1.5}
+.asp-sec{background:var(--sand);position:relative}
+.asp-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--g1),var(--d3),var(--g1))}
+.asp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.asp-card{background:#fff;border:1px solid var(--stone);border-radius:var(--r);padding:1.5rem;text-align:center;transition:all .3s;cursor:default;position:relative;overflow:hidden}
+.asp-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:linear-gradient(to top,var(--g5),transparent);transition:height .3s}
+.asp-card:hover{transform:translateY(-5px);border-color:var(--g1)}.asp-card:hover::after{height:100%}
+.asp-card>*{position:relative}
+.asp-ico{font-size:2.2rem;margin-bottom:.85rem;display:block;transition:transform .3s}
+.asp-card:hover .asp-ico{transform:scale(1.15)}
+.asp-card h4{font-size:.84rem;font-weight:700;color:var(--b3);margin-bottom:.3rem}
+.asp-card p{font-size:.75rem;color:var(--txs);line-height:1.5}
+.asp-banner{background:var(--b3);border-radius:var(--r2);padding:2rem 2.5rem;margin-top:2rem;display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:center;position:relative;overflow:hidden}
+.asp-banner::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.03)}
+.asp-banner-ico{font-size:3rem}
+.asp-banner h4{font-size:1rem;font-weight:700;color:var(--d3);margin-bottom:.4rem}
+.asp-banner p{font-size:.85rem;color:rgba(255,255,255,.65);line-height:1.65}
+.ben-wrap{display:grid;grid-template-columns:1fr 1.3fr;gap:5rem;align-items:center}
+.ben-list{display:flex;flex-direction:column;gap:.85rem}
+.ben-row{display:flex;align-items:flex-start;gap:1.1rem;padding:1.1rem 1.25rem;border-radius:var(--r);border:1px solid var(--stone);background:#fff;transition:all .3s;cursor:default;position:relative;overflow:hidden}
+.ben-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(to right,var(--g5),transparent);transition:width .3s}
+.ben-row:hover{border-color:var(--g3);transform:translateX(5px)}.ben-row:hover::before{width:100%}
+.ben-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;position:relative}
+.ben-row h4{font-size:.87rem;font-weight:700;color:var(--b3);margin-bottom:.2rem;position:relative}
+.ben-row p{font-size:.78rem;color:var(--txs);line-height:1.45;position:relative}
+.ben-visual{display:flex;flex-direction:column;gap:1.25rem}
+.ben-big{background:linear-gradient(160deg,var(--b1) 0%,var(--b3) 60%,var(--b5) 100%);border-radius:var(--r2);padding:2.5rem;position:relative;overflow:hidden;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end}
+.ben-big::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(200,144,58,.15),transparent)}
+.ben-big-bg{position:absolute;top:1.5rem;right:1.5rem;font-size:6rem;opacity:.06}
+.ben-big blockquote{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:rgba(255,255,255,.8);line-height:1.7;position:relative;padding-left:1.5rem;border-left:2px solid var(--d3)}
+.ben-big cite{display:block;font-size:.72rem;color:var(--d3);margin-top:.6rem;font-style:normal;letter-spacing:.06em}
+.ben-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.ben-metric{background:var(--sand);border:1px solid var(--stone);border-radius:var(--r);padding:1.25rem;text-align:center;transition:all .25s;cursor:default}
+.ben-metric:hover{border-color:var(--g3);background:#fff}
+.ben-m-n{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--b3);line-height:1}
+.ben-m-l{font-size:.72rem;color:var(--txs);margin-top:.2rem}
+.partes-sec{background:var(--b2);position:relative;overflow:hidden}
+.partes-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 100% 80% at 50% 0%,rgba(26,102,56,.12),transparent)}
+.partes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.parte{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.75rem;transition:all .3s;cursor:default;position:relative;overflow:hidden}
+.parte::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--g1),transparent);transform:scaleX(0);transition:transform .4s}
+.parte:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12);transform:translateY(-4px)}.parte:hover::before{transform:scaleX(1)}
+.parte-tipo{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--d3);font-weight:700;margin-bottom:.5rem}
+.parte-ico{font-size:1.4rem;margin-bottom:.6rem;display:block}
+.parte h4{font-size:.9rem;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:.4rem}
+.parte p{font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.6}
+.oblig-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.oblig-box{border-radius:var(--r2);overflow:hidden;border:1px solid var(--stone)}
+.oblig-head{padding:1.1rem 1.5rem;font-weight:700;font-size:.88rem;display:flex;align-items:center;gap:.65rem}
+.oblig-head.legal{background:#EFF6FF;color:#185FA5}
+.oblig-head.vol{background:var(--g5);color:var(--b4)}
+.oblig-list{list-style:none;background:#fff}
+.oblig-list li{padding:9px 1.5rem 9px 2.5rem;font-size:.83rem;color:var(--txm);border-bottom:1px solid var(--sand);position:relative;transition:background .2s}
+.oblig-list li:last-child{border:none}
+.oblig-list li:hover{background:var(--g5)}
+.oblig-list li::before{content:'';position:absolute;left:1.1rem;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:var(--g1)}
+.impl-sec{background:var(--b1);overflow:hidden;position:relative}
+.impl-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 90% 50%,rgba(26,102,56,.18),transparent)}
+.impl-sec h2.sec-title{color:#fff}
+.impl-sec .ey-line{background:linear-gradient(90deg,var(--d3),transparent)}
+.impl-sec .eyebrow span{color:var(--d3)}
+.impl-sec .sec-lead{color:rgba(255,255,255,.5)}
+.impl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:2rem}
+.impl-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.75rem;padding-top:2.25rem;position:relative;transition:all .3s;cursor:default}
+.impl-card:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);transform:translateY(-4px)}
+.impl-n{position:absolute;top:-14px;left:1.5rem;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--d3));color:var(--b1);font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.impl-tag{font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--d3);font-weight:700;margin-bottom:.4rem}
+.impl-card h4{font-size:.88rem;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:.4rem}
+.impl-card p{font-size:.78rem;color:rgba(255,255,255,.45);line-height:1.6}
+.impl-nota{background:rgba(200,144,58,.1);border:1px solid rgba(200,144,58,.2);border-radius:var(--r);padding:1.5rem 2rem;display:flex;gap:1.25rem;align-items:center}
+.impl-nota-ico{font-size:1.6rem;flex-shrink:0}
+.impl-nota h4{font-size:.88rem;font-weight:700;color:var(--d3);margin-bottom:.25rem}
+.impl-nota p{font-size:.8rem;color:rgba(255,255,255,.55);line-height:1.6}
+.acc-sec{background:var(--cream)}
+.acc-wrap{max-width:860px}
+.acc-item{border-bottom:1px solid var(--stone);overflow:hidden}
+.acc-btn{width:100%;background:none;border:none;cursor:pointer;padding:1.25rem 0;display:flex;align-items:center;justify-content:space-between;text-align:left;gap:1rem}
+.acc-left{display:flex;align-items:center;gap:1rem}
+.acc-num{width:32px;height:32px;border-radius:8px;background:var(--sand);color:var(--b3);font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .25s;border:1px solid var(--stone)}
+.acc-item.open .acc-num{background:var(--b3);color:#fff;border-color:var(--b3)}
+.acc-lbl{font-size:.93rem;font-weight:700;color:var(--b3);font-family:'Playfair Display',serif}
+.acc-arr{width:24px;height:24px;border-radius:50%;border:1px solid var(--stone);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--txs);transition:all .3s;flex-shrink:0}
+.acc-item.open .acc-arr{transform:rotate(180deg);background:var(--b3);border-color:var(--b3);color:#fff}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.acc-item.open .acc-body{max-height:400px}
+.acc-inner{padding:.5rem 0 1.5rem 2.75rem}
+.acc-desc{font-size:.86rem;color:var(--txm);margin-bottom:.85rem;line-height:1.7}
+.acc-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.acc-tag{font-size:.7rem;background:var(--g5);color:var(--b4);padding:4px 11px;border-radius:20px;border:1px solid rgba(34,161,89,.2);font-weight:500}
+.quiz-sec{background:var(--b3);position:relative;overflow:hidden}
+.quiz-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 10% 50%,rgba(200,144,58,.08),transparent),radial-gradient(ellipse 60% 60% at 90% 20%,rgba(61,201,122,.06),transparent)}
+.quiz-wrap{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.quiz-info .ey-line{background:linear-gradient(90deg,var(--d3),transparent)}
+.quiz-info .eyebrow span{color:var(--d3)}
+.quiz-info h2.sec-title{color:#fff}
+.quiz-info .sec-lead{color:rgba(255,255,255,.5);margin-bottom:2rem}
+.quiz-topics{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.quiz-topic{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:.85rem 1rem;display:flex;align-items:center;gap:.65rem;font-size:.78rem;color:rgba(255,255,255,.6)}
+.quiz-topic span{font-size:1.1rem}
+.quiz-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r2);padding:2.25rem;backdrop-filter:blur(8px)}
+.q-bar-wrap{margin-bottom:1.25rem}
+.q-bar-lbl{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.4);margin-bottom:.4rem}
+.q-bar{height:3px;background:rgba(255,255,255,.08);border-radius:2px}
+.q-fill{height:100%;background:linear-gradient(90deg,var(--g1),var(--d3));border-radius:2px;transition:width .4s}
+.q-text{font-size:.96rem;font-weight:600;color:#fff;margin-bottom:1.3rem;line-height:1.55}
+.q-opts{display:grid;gap:.6rem}
+.q-opt{padding:.9rem 1.1rem;border:1px solid rgba(255,255,255,.12);border-radius:10px;cursor:pointer;font-size:.84rem;background:rgba(255,255,255,.04);text-align:left;color:rgba(255,255,255,.8);transition:all .22s;width:100%;font-family:'Syne',sans-serif}
+.q-opt:hover:not(:disabled){background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);transform:translateX(3px)}
+.q-opt.ok{background:rgba(61,201,122,.15);border-color:var(--g2);color:var(--g4)}
+.q-opt.fail{background:rgba(240,80,80,.12);border-color:#F05050;color:#FCA5A5}
+.q-fb{margin-top:.9rem;padding:.9rem 1.1rem;border-radius:10px;font-size:.82rem;display:none;line-height:1.55}
+.q-fb.show{display:block}
+.q-fb.ok{background:rgba(61,201,122,.1);color:var(--g4);border:1px solid rgba(61,201,122,.2)}
+.q-fb.fail{background:rgba(240,80,80,.1);color:#FCA5A5;border:1px solid rgba(240,80,80,.2)}
+.q-nav{display:flex;justify-content:flex-end;margin-top:1.1rem}
+.q-score{text-align:center;padding:1.5rem 0;display:none}
+.q-score-n{font-family:'Playfair Display',serif;font-size:4.5rem;font-weight:900;color:var(--d3);line-height:1}
+.q-score-p{font-size:.88rem;color:rgba(255,255,255,.55);margin-top:.3rem}
+.gloss-sec{background:var(--sand)}
+.gloss-search-wrap{position:relative;max-width:520px;margin-bottom:2.5rem}
+.gloss-search-wrap::before{content:'🔍';position:absolute;left:1rem;top:50%;transform:translateY(-50%);font-size:.9rem;pointer-events:none}
+.gloss-search{width:100%;padding:12px 16px 12px 2.8rem;border:1.5px solid var(--stone);border-radius:10px;font-size:.9rem;font-family:'Syne',sans-serif;color:var(--tx);background:#fff;outline:none;transition:border-color .25s,box-shadow .25s}
+.gloss-search:focus{border-color:var(--g1);box-shadow:0 0 0 3px rgba(34,161,89,.1)}
+.gloss-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1rem}
+.gloss-card{background:#fff;border:1px solid var(--stone);border-radius:var(--r);padding:1.4rem;transition:all .28s;cursor:default;position:relative;overflow:hidden}
+.gloss-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--g1),var(--d3));transform:scaleY(0);transition:transform .3s;transform-origin:top}
+.gloss-card:hover{border-color:var(--g3);transform:translateY(-3px)}.gloss-card:hover::before{transform:scaleY(1)}
+.gloss-term{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--b3);margin-bottom:.4rem}
+.gloss-def{font-size:.81rem;color:var(--txm);line-height:1.6}
+.gloss-card.hidden{display:none}
+footer{background:var(--b1);color:rgba(255,255,255,.45);border-top:1px solid rgba(255,255,255,.04)}
+.footer-top{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:3.5rem;padding:4rem 6rem 3rem}
+.f-brand{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:#fff;font-style:italic;margin-bottom:.75rem;line-height:1.1}
+.f-brand em{color:var(--d3)}
+.f-desc{font-size:.79rem;line-height:1.8;max-width:280px;color:rgba(255,255,255,.38)}
+footer h5{color:rgba(255,255,255,.7);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem}
+footer ul{list-style:none}
+footer ul li{margin-bottom:.5rem}
+footer ul a{color:rgba(255,255,255,.38);text-decoration:none;font-size:.79rem;transition:color .2s}
+footer ul a:hover{color:rgba(255,255,255,.9)}
+.footer-bot{border-top:1px solid rgba(255,255,255,.05);padding:1.5rem 6rem 2rem;text-align:center;line-height:2}
+.footer-uni{font-size:.88rem;color:rgba(255,255,255,.65);font-weight:500}
+.footer-curso{font-size:.76rem;color:rgba(255,255,255,.32)}
+.footer-names{font-size:.82rem;color:rgba(255,255,255,.5)}
+.footer-names strong{color:var(--d3)}
+.fu{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.fu.in{opacity:1;transform:none}
+.fu.d1{transition-delay:.1s}.fu.d2{transition-delay:.2s}.fu.d3{transition-delay:.3s}
+@media(max-width:960px){
+  section{padding:4rem 2rem}
+  nav{padding:0 1.5rem}.nav-links{display:none}
+  .hero-content{grid-template-columns:1fr;padding:0 2rem;padding-top:80px}.hero-right{display:none}
+  .que-wrap,.phva-wrap,.ben-wrap,.quiz-wrap,.oblig-grid{grid-template-columns:1fr}
+  .princip-grid,.asp-grid,.partes-grid,.impl-grid,.quiz-topics{grid-template-columns:1fr 1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr;gap:2rem;padding:2.5rem 2rem}
+  .footer-bot{padding:1.5rem 2rem}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<canvas id="particles"></canvas>
+<nav id="mainNav">
+  <span class="nav-logo">Gestión <em style="font-style:italic;color:var(--d3)">Ambiental</em></span>
+  <ul class="nav-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#que-es">¿Qué es?</a></li>
+    <li><a href="#principios">Principios</a></li>
+    <li><a href="#phva">PHVA</a></li>
+    <li><a href="#beneficios">Beneficios</a></li>
+    <li><a href="#implementacion">Implementación</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+    <li><a href="#glosario">Glosario</a></li>
+  </ul>
+</nav>
+<div class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-mesh"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-tag"><div class="hero-tag-dot"></div><span>Gestión Ambiental Empresarial</span></div>
+      <h1>El planeta<br><span class="line2">necesita</span><span class="line3">organizaciones</span></h1>
+      <p class="hero-desc">Un marco sistemático para que las empresas protejan el medio ambiente, cumplan sus responsabilidades legales y construyan un futuro verdaderamente sostenible.</p>
+      <div class="hero-ctas">
+        <a href="#que-es" class="cta-main"><span>Comenzar a explorar</span></a>
+        <a href="#quiz" class="cta-sec">Evalúa tu conocimiento</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-orb">
+        <div class="orb-ring"></div><div class="orb-ring"></div><div class="orb-ring"></div>
+        <div class="orb-center"><div class="orb-leaf">🌿</div><div class="orb-lbl">Sistema de<br>Gestión Ambiental</div></div>
+        <div class="orb-dot"></div><div class="orb-dot"></div><div class="orb-dot"></div><div class="orb-dot"></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div><span class="scroll-txt">scroll</span></div>
+</div>
+<div class="stats">
+  <div class="s-item"><span class="s-num" id="sn1">0</span><span class="s-lbl">Certificaciones en el mundo</span></div>
+  <div class="s-item"><span class="s-num" id="sn2">0</span><span class="s-lbl">Países que la aplican</span></div>
+  <div class="s-item"><span class="s-num">3</span><span class="s-lbl">Pilares de la sostenibilidad</span></div>
+  <div class="s-item"><span class="s-num">PHVA</span><span class="s-lbl">Modelo de mejora continua</span></div>
+</div>
+<section id="que-es">
+  <div class="que-wrap">
+    <div class="que-txt fu">
+      <div class="eyebrow"><div class="ey-line"></div><span>Fundamentos</span></div>
+      <h2 class="sec-title">¿Qué es un Sistema de Gestión Ambiental?</h2>
+      <p>Un <strong>Sistema de Gestión Ambiental (SGA)</strong> es el conjunto de procesos, políticas y procedimientos que una organización implementa para gestionar de forma sistemática sus responsabilidades ambientales.</p>
+      <p>Su propósito es contribuir al equilibrio entre los tres pilares de la sostenibilidad: el ambiental, el social y el económico. Se aplica a organizaciones de cualquier tamaño, sector o naturaleza.</p>
+      <div class="pilares">
+        <div class="pilar"><span class="pilar-ico">🌿</span><h4>Pilar Ambiental</h4><p>Protege el entorno y reduce impactos negativos sobre el aire, agua, suelo y biodiversidad.</p></div>
+        <div class="pilar"><span class="pilar-ico">👥</span><h4>Pilar Social</h4><p>Responde a las expectativas de transparencia y responsabilidad corporativa de la sociedad.</p></div>
+        <div class="pilar"><span class="pilar-ico">💼</span><h4>Pilar Económico</h4><p>Genera beneficios financieros y fortalece la posición competitiva de la organización.</p></div>
+        <div class="pilar"><span class="pilar-ico">⚖️</span><h4>Cumplimiento Legal</h4><p>Garantiza conformidad con leyes, reglamentos y compromisos voluntarios asumidos.</p></div>
+      </div>
+    </div>
+    <div class="que-visual fu d2">
+      <div class="vis-card-main">
+        <div class="vis-bg-text">SGA</div>
+        <div class="vis-tag">Desarrollo Sostenible</div>
+        <h3>Producción responsable con el entorno natural</h3>
+        <p>Identificar, controlar y reducir los impactos ambientales de todas las operaciones, desde la obtención de materias primas hasta el fin de vida del producto.</p>
+      </div>
+      <div class="vis-mini-grid">
+        <div class="vis-mini"><span>🌳</span><h4>Biodiversidad</h4><p>Ecosistemas y fauna protegidos</p></div>
+        <div class="vis-mini"><span>💧</span><h4>Recursos hídricos</h4><p>Uso eficiente del agua</p></div>
+        <div class="vis-mini"><span>☀️</span><h4>Energía limpia</h4><p>Fuentes renovables</p></div>
+        <div class="vis-mini"><span>♻️</span><h4>Economía circular</h4><p>Reducir · Reutilizar · Reciclar</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="principios" class="sec-night">
+  <div class="fu">
+    <div class="eyebrow"><div class="ey-line"></div><span>Estructura normativa</span></div>
+    <h2 class="sec-title">Principios y Requisitos</h2>
+    <p class="sec-lead">Siete cláusulas normativas que abarcan desde el contexto organizacional hasta la mejora continua del desempeño ambiental.</p>
+  </div>
+  <div class="princip-grid fu" id="pcGrid"></div>
+</section>
+<section id="phva">
+  <div class="fu" style="margin-bottom:3.5rem">
+    <div class="eyebrow"><div class="ey-line"></div><span>Metodología base</span></div>
+    <h2 class="sec-title">El Ciclo Planificar–Hacer–<br>Verificar–Actuar</h2>
+    <p class="sec-lead">El corazón del sistema de gestión ambiental. Selecciona cada etapa para explorar sus actividades.</p>
+  </div>
+  <div class="phva-wrap">
+    <div class="phva-btns fu" id="phvaButtons"></div>
+    <div class="phva-panel fu d2">
+      <div class="phva-card" id="phvaCard">
+        <div style="text-align:center;padding:3rem 1rem;color:var(--txs)">
+          <div style="font-size:3rem;margin-bottom:1rem">👈</div>
+          <p style="font-size:.9rem">Selecciona una etapa del ciclo para ver sus detalles y actividades principales.</p>
+        </div>
+      </div>
+      <div class="phva-eco"><div class="phva-eco-ico">♻️</div><div><h5>Economía Circular</h5><p>El ciclo PHVA impulsa la reutilización y reciclaje dentro de la perspectiva de ciclo de vida completo del producto.</p></div></div>
+    </div>
+  </div>
+</section>
+<section class="asp-sec">
+  <div class="fu">
+    <div class="eyebrow"><div class="ey-line"></div><span>Identificación y control</span></div>
+    <h2 class="sec-title">Aspectos e Impactos Ambientales</h2>
+    <p class="sec-lead">La identificación de aspectos significativos es el punto de partida del SGA. La relación entre aspecto e impacto es de causa y efecto.</p>
+  </div>
+  <div class="asp-grid fu">
+    <div class="asp-card"><span class="asp-ico">💨</span><h4>Emisiones al aire</h4><p>Gases, partículas y vapores liberados durante los procesos productivos.</p></div>
+    <div class="asp-card"><span class="asp-ico">💧</span><h4>Vertidos al agua</h4><p>Líquidos que pueden contaminar cuerpos de agua superficiales o subterráneos.</p></div>
+    <div class="asp-card"><span class="asp-ico">🌱</span><h4>Descargas al suelo</h4><p>Sustancias que pueden afectar la calidad y fertilidad del suelo.</p></div>
+    <div class="asp-card"><span class="asp-ico">⚡</span><h4>Consumo de energía</h4><p>Uso de recursos energéticos renovables y no renovables en operaciones.</p></div>
+    <div class="asp-card"><span class="asp-ico">🪵</span><h4>Materias primas</h4><p>Extracción y consumo de recursos naturales en la cadena productiva.</p></div>
+    <div class="asp-card"><span class="asp-ico">🗑️</span><h4>Generación de residuos</h4><p>Desechos sólidos, peligrosos o especiales en los procesos organizacionales.</p></div>
+    <div class="asp-card"><span class="asp-ico">🔊</span><h4>Ruido y vibraciones</h4><p>Emisiones acústicas que pueden afectar comunidades vecinas y ecosistemas.</p></div>
+    <div class="asp-card"><span class="asp-ico">🦋</span><h4>Biodiversidad</h4><p>Efectos sobre ecosistemas, flora y fauna en el área de influencia.</p></div>
+  </div>
+  <div class="asp-banner fu">
+    <div class="asp-banner-ico">🔄</div>
+    <div><h4>Perspectiva de ciclo de vida</h4><p>El SGA exige analizar aspectos e impactos en todas las etapas del producto o servicio: desde la extracción de materias primas, pasando por diseño, fabricación, distribución y uso, hasta el tratamiento al final de su vida útil.</p></div>
+  </div>
+</section>
+<section id="beneficios">
+  <div class="ben-wrap">
+    <div class="fu">
+      <div class="eyebrow"><div class="ey-line"></div><span>¿Por qué implementarlo?</span></div>
+      <h2 class="sec-title">Beneficios de una gestión ambiental eficaz</h2>
+      <p style="color:var(--txm);font-size:.96rem;line-height:1.9;margin-bottom:1.75rem">Adoptar un SGA aporta valor tangible a la organización, al medio ambiente y a sus partes interesadas.</p>
+      <div class="ben-list">
+        <div class="ben-row"><div class="ben-ico" style="background:#E8F5EE">🌍</div><div><h4>Protección del entorno natural</h4><p>Previene o reduce impactos adversos mediante controles operacionales sistemáticos.</p></div></div>
+        <div class="ben-row"><div class="ben-ico" style="background:#EFF6FF">📋</div><div><h4>Cumplimiento legal garantizado</h4><p>Asegura conformidad con leyes, reglamentos y permisos ambientales aplicables.</p></div></div>
+        <div class="ben-row"><div class="ben-ico" style="background:#FFF8E7">💰</div><div><h4>Ahorro y eficiencia operativa</h4><p>Reduce costos por uso eficiente de energía, agua y materias primas.</p></div></div>
+        <div class="ben-row"><div class="ben-ico" style="background:var(--g5)">🏆</div><div><h4>Ventaja competitiva</h4><p>Fortalece la reputación y genera confianza ante clientes, inversores y reguladores.</p></div></div>
+        <div class="ben-row"><div class="ben-ico" style="background:#E8F5EE">📈</div><div><h4>Mejora continua del desempeño</h4><p>El ciclo PHVA eleva sistemáticamente el nivel ambiental organizacional.</p></div></div>
+        <div class="ben-row"><div class="ben-ico" style="background:#FEF0F0">♻️</div><div><h4>Economía circular</h4><p>Promueve reducción, reutilización y reciclaje en perspectiva de ciclo de vida.</p></div></div>
+      </div>
+    </div>
+    <div class="ben-visual fu d2">
+      <div class="ben-big">
+        <div class="ben-big-bg">🌿</div>
+        <blockquote>"La demostración de la implementación exitosa del sistema puede usarse para asegurar a las partes interesadas que se ha puesto en marcha una gestión ambiental apropiada."<cite>— Normativa SGA, 2015</cite></blockquote>
+      </div>
+      <div class="ben-metrics">
+        <div class="ben-metric"><div class="ben-m-n">+300K</div><div class="ben-m-l">Certificaciones globales</div></div>
+        <div class="ben-metric"><div class="ben-m-n">170+</div><div class="ben-m-l">Países aplicando</div></div>
+        <div class="ben-metric"><div class="ben-m-n">30%</div><div class="ben-m-l">Reducción de residuos</div></div>
+        <div class="ben-metric"><div class="ben-m-n">∞</div><div class="ben-m-l">Mejora continua</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="partes-sec">
+  <div class="fu">
+    <div class="eyebrow"><div class="ey-line"></div><span>Actores del sistema</span></div>
+    <h2 class="sec-title" style="color:#fff">Partes Interesadas del SGA</h2>
+    <p class="sec-lead">La organización debe identificar y comprender a todos los actores que pueden afectar o verse afectados por su desempeño ambiental.</p>
+  </div>
+  <div class="partes-grid fu">
+    <div class="parte"><div class="parte-tipo">Internas</div><span class="parte-ico">👥</span><h4>Personal y empleados</h4><p>Deben tomar conciencia de la política ambiental, los aspectos significativos y sus responsabilidades.</p></div>
+    <div class="parte"><div class="parte-tipo">Regulatorias</div><span class="parte-ico">🏛️</span><h4>Autoridades gubernamentales</h4><p>Establecen leyes, reglamentos, permisos y licencias ambientales de cumplimiento obligatorio.</p></div>
+    <div class="parte"><div class="parte-tipo">Comerciales</div><span class="parte-ico">🤝</span><h4>Clientes y proveedores</h4><p>Sus requisitos ambientales deben considerarse en compras y cadena de suministro.</p></div>
+    <div class="parte"><div class="parte-tipo">Sociales</div><span class="parte-ico">🏘️</span><h4>Comunidades locales</h4><p>Grupos afectados por las actividades cuyas preocupaciones deben atenderse.</p></div>
+    <div class="parte"><div class="parte-tipo">Financieras</div><span class="parte-ico">💼</span><h4>Inversores y aseguradoras</h4><p>Evalúan el riesgo ambiental para decisiones de inversión y cobertura de riesgos.</p></div>
+    <div class="parte"><div class="parte-tipo">Civiles</div><span class="parte-ico">🌿</span><h4>Organizaciones ambientales</h4><p>Supervisan el desempeño corporativo y generan presión para mejorar prácticas ecológicas.</p></div>
+  </div>
+</section>
+<section>
+  <div class="fu">
+    <div class="eyebrow"><div class="ey-line"></div><span>Marco normativo</span></div>
+    <h2 class="sec-title">Obligaciones de Cumplimiento</h2>
+    <p class="sec-lead">Las obligaciones incluyen exigencias legales obligatorias y compromisos voluntariamente adoptados por la organización.</p>
+  </div>
+  <div class="oblig-grid fu">
+    <div class="oblig-box">
+      <div class="oblig-head legal">⚖️ Obligaciones legales — obligatorias</div>
+      <ul class="oblig-list">
+        <li>Leyes y reglamentaciones ambientales aplicables</li>
+        <li>Permisos, licencias y autorizaciones ambientales</li>
+        <li>Órdenes y guías de organismos reguladores</li>
+        <li>Sentencias de cortes o tribunales administrativos</li>
+        <li>Tratados, convenciones y protocolos internacionales</li>
+      </ul>
+    </div>
+    <div class="oblig-box">
+      <div class="oblig-head vol">🌿 Compromisos voluntarios — adoptados</div>
+      <ul class="oblig-list">
+        <li>Acuerdos con comunidades y organizaciones civiles</li>
+        <li>Principios y códigos de práctica voluntarios</li>
+        <li>Compromisos de etiquetado ambiental voluntario</li>
+        <li>Normas pertinentes del sector industrial</li>
+        <li>Obligaciones contractuales con socios comerciales</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section id="implementacion" class="impl-sec">
+  <div class="fu">
+    <div class="eyebrow"><div class="ey-line"></div><span>Guía práctica</span></div>
+    <h2 class="sec-title">Pasos para Implementar el Sistema</h2>
+    <p class="sec-lead">Cada organización decide el nivel de detalle y los recursos según su propio contexto, tamaño y naturaleza.</p>
+  </div>
+  <div class="impl-grid fu" id="implGrid"></div>
+  <div class="impl-nota fu"><div class="impl-nota-ico">💡</div><div><h4>No hay un único camino</h4><p>La normativa reconoce que el nivel de detalle, la documentación y los recursos necesarios varían según el tamaño, la ubicación, el sector y la naturaleza de las actividades de cada organización.</p></div></div>
+</section>
+<section class="acc-sec">
+  <div class="fu">
+    <div class="eyebrow"><div class="ey-line"></div><span>Detalle normativo</span></div>
+    <h2 class="sec-title">Cláusulas de la Norma</h2>
+    <p class="sec-lead">Explora en detalle cada una de las siete cláusulas que conforman el marco completo del sistema.</p>
+  </div>
+  <div class="acc-wrap fu" id="accWrap"></div>
+</section>
+<section id="quiz" class="quiz-sec">
+  <div class="quiz-wrap">
+    <div class="quiz-info fu">
+      <div class="eyebrow"><div class="ey-line"></div><span>Evalúa tu aprendizaje</span></div>
+      <h2 class="sec-title">Quiz de Gestión Ambiental</h2>
+      <p class="sec-lead">Pon a prueba los conceptos aprendidos sobre sistemas de gestión ambiental.</p>
+      <div class="quiz-topics">
+        <div class="quiz-topic"><span>🌿</span> Aspectos ambientales</div>
+        <div class="quiz-topic"><span>🔄</span> Ciclo PHVA</div>
+        <div class="quiz-topic"><span>⚖️</span> Obligaciones</div>
+        <div class="quiz-topic"><span>🏢</span> Liderazgo</div>
+        <div class="quiz-topic"><span>🔍</span> Ciclo de vida</div>
+        <div class="quiz-topic"><span>📋</span> Auditorías</div>
+      </div>
+    </div>
+    <div class="fu d2"><div class="quiz-box" id="quizBox"></div></div>
+  </div>
+</section>
+<section id="glosario" class="gloss-sec">
+  <div class="fu">
+    <div class="eyebrow"><div class="ey-line"></div><span>Términos y definiciones</span></div>
+    <h2 class="sec-title">Glosario Ambiental</h2>
+    <p class="sec-lead">Busca cualquier concepto clave del sistema de gestión ambiental.</p>
+    <div class="gloss-search-wrap"><input class="gloss-search" type="search" placeholder="Buscar término… (ej. aspecto, PHVA, auditoría)" oninput="filterGloss(this.value)"></div>
+  </div>
+  <div class="gloss-grid fu" id="glossGrid"></div>
+</section>
+<footer>
+  <div class="footer-top">
+    <div><div class="f-brand">Gestión<br><em>Ambiental</em></div><p class="f-desc">Sitio web educativo sobre Sistemas de Gestión Ambiental, basado en la normativa internacional vigente. Elaborado con fines académicos.</p></div>
+    <div><h5>Contenido</h5><ul><li><a href="#que-es">¿Qué es el SGA?</a></li><li><a href="#principios">Principios</a></li><li><a href="#phva">Ciclo PHVA</a></li><li><a href="#beneficios">Beneficios</a></li></ul></div>
+    <div><h5>Recursos</h5><ul><li><a href="#implementacion">Implementación</a></li><li><a href="#quiz">Quiz</a></li><li><a href="#glosario">Glosario</a></li></ul></div>
+    <div><h5>Normativa</h5><ul><li><a href="#">Directrices generales</a></li><li><a href="#">Evaluación desempeño</a></li><li><a href="#">Análisis ciclo de vida</a></li><li><a href="#">Comunicación ambiental</a></li><li><a href="#">Auditorías internas</a></li></ul></div>
+  </div>
+  <div class="footer-bot">
+    <div class="footer-uni">Aspectos Generales del Medio Ambiente</div>
+    <div class="footer-curso">Universidad Cooperativa de Colombia — Montería &nbsp;·&nbsp; 2026-1</div>
+    <div class="footer-names"><strong>Andrés Felipe Montalvo</strong> &nbsp;&amp;&nbsp; <strong>Moisés Díaz Córdoba</strong></div>
+  </div>
+</footer>
+<script>
+(function(){
+  const c=document.getElementById('particles'),ctx=c.getContext('2d');
+  let pts=[];
+  function resize(){c.width=innerWidth;c.height=innerHeight}
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<55;i++)pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.12,r:Math.random()*1.6+.4,o:Math.random()*.45+.12});
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=c.width;if(p.x>c.width)p.x=0;
+      if(p.y<0)p.y=c.height;if(p.y>c.height)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(61,201,122,${p.o})`;ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+const PC_ICONS=['🗺️','🎯','📊','🛠️','⚙️','📈','✅'];
+const PRINCIP=[
+  {n:'04',t:'Contexto de la organización',ico:PC_ICONS[0],tags:['Análisis interno','Análisis externo','Partes interesadas','Alcance'],d:'La organización debe determinar las cuestiones internas y externas pertinentes a su propósito, incluyendo las condiciones ambientales capaces de afectar o verse afectadas por sus actividades.'},
+  {n:'05',t:'Liderazgo y compromiso',ico:PC_ICONS[1],tags:['Política ambiental','Alta dirección','Roles','Recursos'],d:'La alta dirección debe demostrar liderazgo y compromiso, establecer la política ambiental y asegurar los recursos necesarios para el sistema en toda la organización.'},
+  {n:'06',t:'Planificación estratégica',ico:PC_ICONS[2],tags:['Aspectos significativos','Obligaciones','Riesgos','Objetivos'],d:'Incluye la identificación de aspectos ambientales significativos, las obligaciones de cumplimiento, la evaluación de riesgos y oportunidades, y el establecimiento de objetivos medibles.'},
+  {n:'07',t:'Soporte y recursos',ico:PC_ICONS[3],tags:['Competencia','Conciencia','Comunicación','Documentación'],d:'La organización debe proporcionar recursos, asegurar la competencia del personal, generar toma de conciencia ambiental y planificar procesos de comunicación interna y externa.'},
+  {n:'08',t:'Operación y control',ico:PC_ICONS[4],tags:['Control operacional','Ciclo de vida','Emergencias','Proveedores'],d:'Incluye la planificación y control de los procesos operativos, la gestión de proveedores con perspectiva de ciclo de vida y la preparación ante emergencias ambientales.'},
+  {n:'09',t:'Evaluación del desempeño',ico:PC_ICONS[5],tags:['Seguimiento','Medición','Auditoría','Revisión dirección'],d:'La organización debe hacer seguimiento, medir y evaluar su desempeño ambiental, realizar auditorías internas periódicas y someter el sistema a revisión por la alta dirección.'},
+  {n:'10',t:'Mejora continua',ico:PC_ICONS[6],tags:['No conformidades','Acciones correctivas','Mejora'],d:'Gestiona las no conformidades, investiga causas, implementa acciones correctivas eficaces y mantiene la mejora continua de la eficacia del sistema.'},
+];
+const PHVA={
+  P:{label:'Planificar',clausula:'Cláusula 6',bc:'#EFF6FF',tc:'#185FA5',items:['Identificar aspectos ambientales significativos de todas las operaciones','Determinar y acceder a las obligaciones de cumplimiento aplicables','Evaluar riesgos y oportunidades asociados con el sistema','Establecer objetivos ambientales medibles en todos los niveles','Planificar acciones para lograr los objetivos y gestionar riesgos']},
+  H:{label:'Hacer',clausula:'Cláusulas 7 y 8',bc:'#E8F5EE',tc:'#085041',items:['Proveer recursos y asegurar la competencia del personal involucrado','Generar toma de conciencia ambiental en toda la organización','Implementar controles operacionales para los aspectos significativos','Gestionar la cadena de suministro con perspectiva de ciclo de vida','Establecer y practicar procedimientos de respuesta ante emergencias']},
+  V:{label:'Verificar',clausula:'Cláusula 9',bc:'#FFF8E7',tc:'#633806',items:['Hacer seguimiento y medición del desempeño con indicadores propios','Evaluar periódicamente el cumplimiento de obligaciones legales','Realizar auditorías internas a intervalos planificados y documentados','Analizar y evaluar los resultados del seguimiento y la medición','Someter el sistema a revisión periódica por la alta dirección']},
+  A:{label:'Actuar',clausula:'Cláusula 10',bc:'#FEF0F0',tc:'#791F1F',items:['Reaccionar ante las no conformidades de forma inmediata y eficaz','Investigar causas raíz para evitar la recurrencia del problema','Implementar acciones correctivas proporcionales a la importancia','Revisar la eficacia de las acciones tomadas y documentarlas','Mejorar continuamente la idoneidad y eficacia del sistema']},
+};
+const IMPL=[
+  {tag:'Diagnóstico',t:'Análisis inicial del contexto',p:'Identificar cuestiones internas y externas, partes interesadas y revisar el cumplimiento legal ambiental vigente.'},
+  {tag:'Liderazgo',t:'Compromiso de la dirección',p:'Definir la política ambiental, asignar roles, asegurar recursos y comunicar la importancia del sistema.'},
+  {tag:'Planificación',t:'Aspectos, riesgos y objetivos',p:'Evaluar aspectos significativos, determinar obligaciones, analizar riesgos y establecer objetivos medibles.'},
+  {tag:'Soporte',t:'Formación y documentación',p:'Capacitar al personal, establecer canales de comunicación y crear la información documentada necesaria.'},
+  {tag:'Operación',t:'Implementar controles',p:'Ejecutar procesos planificados, gestionar proveedores con perspectiva de ciclo de vida y preparar respuesta ante emergencias.'},
+  {tag:'Evaluación',t:'Seguimiento y auditoría',p:'Medir el desempeño ambiental, evaluar el cumplimiento y revisar el sistema con la alta dirección.'},
+  {tag:'Mejora',t:'Acciones correctivas',p:'Gestionar no conformidades, investigar causas raíz e implementar acciones correctivas eficaces.'},
+];
+const QUIZ=[
+  {q:'¿Qué relación existe entre un aspecto ambiental y un impacto ambiental?',opts:['Son conceptos idénticos y equivalentes','El aspecto es la causa; el impacto es el efecto en el medio ambiente','El impacto es la causa; el aspecto es la consecuencia','No existe relación entre ellos'],a:1,exp:'La relación es de causa y efecto. El aspecto (ej: descarga de químicos) genera el impacto (ej: contaminación del agua). Un aspecto puede provocar uno o varios impactos.'},
+  {q:'¿Cuál es el propósito del ciclo PHVA en un Sistema de Gestión Ambiental?',opts:['Reducir costos administrativos únicamente','Garantizar la mejora continua del desempeño ambiental','Cumplir requisitos legales de forma puntual','Organizar el archivo de documentos'],a:1,exp:'El ciclo PHVA es un proceso reiterativo que garantiza la mejora continua. Se aplica al SGA completo y a cada uno de sus elementos individuales.'},
+  {q:'¿Qué son las "obligaciones de cumplimiento" en un SGA?',opts:['Solo las leyes ambientales nacionales','Los requisitos del cliente sobre calidad del producto','Requisitos que la organización debe o decide cumplir, legales y voluntarios','El presupuesto asignado al área ambiental'],a:2,exp:'Las obligaciones de cumplimiento incluyen tanto obligaciones legales obligatorias (leyes, permisos) como compromisos voluntarios adoptados por la organización.'},
+  {q:'¿Qué cláusula de la norma establece los requisitos de Liderazgo?',opts:['Cláusula 4 — Contexto','Cláusula 5 — Liderazgo','Cláusula 6 — Planificación','Cláusula 9 — Evaluación'],a:1,exp:'La cláusula 5 "Liderazgo" establece que la alta dirección debe demostrar compromiso, establecer la política ambiental y asegurar los resultados previstos del sistema.'},
+  {q:'¿Qué significa la "perspectiva de ciclo de vida" en la gestión ambiental?',opts:['Evaluar solo la etapa de producción','Considerar impactos desde materias primas hasta el fin de vida del producto','Analizar únicamente los residuos generados','Revisar el ciclo contable de la empresa'],a:1,exp:'La perspectiva de ciclo de vida implica considerar todas las etapas: extracción de materias primas, diseño, fabricación, transporte, uso y tratamiento al finalizar la vida del producto.'},
+  {q:'¿Cuál es la función de la auditoría interna en el SGA?',opts:['Reemplazar a organismos de certificación externos','Proporcionar información sobre si el SGA cumple requisitos y está eficazmente implementado','Fiscalizar las finanzas del departamento ambiental','Capacitar al personal en normas de seguridad'],a:1,exp:'Las auditorías internas se realizan a intervalos planificados para proporcionar información sobre si el SGA cumple los requisitos y si está eficazmente implementado y mantenido.'},
+];
+const GLOSS=[
+  {t:'Aspecto ambiental',d:'Elemento de las actividades, productos o servicios de una organización que interactúa o puede interactuar con el medio ambiente.'},
+  {t:'Impacto ambiental',d:'Cambio en el medio ambiente, adverso o beneficioso, como resultado total o parcial de los aspectos ambientales de una organización.'},
+  {t:'Sistema de gestión ambiental',d:'Parte del sistema de gestión usada para gestionar aspectos ambientales, cumplir obligaciones de cumplimiento y abordar el riesgo asociado con amenazas y oportunidades.'},
+  {t:'Política ambiental',d:'Intenciones y dirección de la organización, expresadas formalmente por su alta dirección, relacionadas con el desempeño ambiental.'},
+  {t:'Desempeño ambiental',d:'Desempeño relacionado con la gestión de aspectos ambientales. Se mide respecto a la política, los objetivos u otro criterio usando indicadores.'},
+  {t:'Objetivo ambiental',d:'Objetivo establecido por la organización, coherente con su política ambiental, que puede ser estratégico, táctico u operativo.'},
+  {t:'Obligaciones de cumplimiento',d:'Requisitos que debe o decide cumplir una organización. Incluyen legales obligatorios y compromisos voluntariamente adoptados.'},
+  {t:'Ciclo de vida',d:'Etapas consecutivas e interrelacionadas del producto, desde la adquisición de materias primas hasta el tratamiento al finalizar su vida.'},
+  {t:'Prevención de la contaminación',d:'Uso de procesos, prácticas y técnicas para evitar, reducir o controlar la creación, emisión o descarga de cualquier tipo de contaminante o residuo.'},
+  {t:'Mejora continua',d:'Actividad recurrente para mejorar el desempeño ambiental en coherencia con la política ambiental de la organización.'},
+  {t:'No conformidad',d:'Incumplimiento de un requisito. Se relaciona con las obligaciones de cumplimiento y los requisitos adicionales del SGA.'},
+  {t:'Acción correctiva',d:'Acción para eliminar la causa de una no conformidad y prevenir que vuelva a ocurrir en el mismo lugar o en otro diferente.'},
+  {t:'Auditoría',d:'Proceso sistemático, independiente y documentado para obtener evidencias y evaluarlas objetivamente, determinando el grado en que se cumplen los criterios de auditoría.'},
+  {t:'Alta dirección',d:'Persona o grupo de personas que dirige y controla una organización al más alto nivel. Tiene el poder para delegar autoridad y proporcionar recursos.'},
+  {t:'Parte interesada',d:'Persona u organización que puede afectar, verse afectada, o percibirse como afectada por una decisión o actividad de la organización.'},
+  {t:'Información documentada',d:'Información que una organización tiene que controlar y mantener, y el medio en que está contenida. Puede estar en cualquier formato y medio.'},
+  {t:'Competencia',d:'Capacidad para aplicar conocimientos y habilidades con el fin de lograr los resultados previstos en materia ambiental.'},
+  {t:'Riesgo ambiental',d:'Efecto de la incertidumbre sobre los objetivos. Un efecto es una desviación de lo esperado, ya sea positivo (oportunidad) o negativo (amenaza).'},
+  {t:'Ciclo PHVA',d:'Ciclo iterativo de Planificar, Hacer, Verificar y Actuar. Metodología base del sistema de gestión ambiental para la mejora continua.'},
+  {t:'Indicador ambiental',d:'Representación mesurable de la condición o estado de las operaciones, de la gestión o de las condiciones ambientales de una organización.'},
+];
+
+window.addEventListener('DOMContentLoaded',()=>{
+  countUp('sn1',300000,'+300K',1800);countUp('sn2',170,'170+',1300);
+  buildPC();buildPHVA();buildImpl();buildAcc();buildQuiz();buildGloss();
+  setupScroll();setupFadeUp();
+});
+function countUp(id,target,display,dur){const el=document.getElementById(id);let s=null;const step=ts=>{if(!s)s=ts;const p=Math.min((ts-s)/dur,1);const v=Math.round(p*target);el.textContent=v>=target?display:(v>=1000?'+'+Math.round(v/1000)+'K':v);if(p<1)requestAnimationFrame(step);};requestAnimationFrame(step);}
+function buildPC(){document.getElementById('pcGrid').innerHTML=PRINCIP.map(r=>`<div class="pc"><div class="pc-n">${r.n}</div><span class="pc-ico">${r.ico}</span><div class="pc-title">${r.t}</div><div class="pc-tags">${r.tags.map(t=>`<span class="pc-tag">${t}</span>`).join('')}</div><div class="pc-desc">${r.d}</div></div>`).join('');}
+function buildPHVA(){const steps=['P','H','V','A'];document.getElementById('phvaButtons').innerHTML=steps.map(s=>`<button class="phva-btn" id="pb${s}" onclick="showPHVA('${s}')"><div class="phva-letter" style="background:${PHVA[s].bc};color:${PHVA[s].tc}">${s}</div><div><h3>${PHVA[s].label} — <span style="font-weight:400;font-size:.78rem;opacity:.7">${PHVA[s].clausula}</span></h3><p>${PHVA[s].items[0]}</p></div></button>`).join('');}
+function showPHVA(s){document.querySelectorAll('.phva-btn').forEach(b=>b.classList.remove('on'));document.getElementById('pb'+s).classList.add('on');const d=PHVA[s];document.getElementById('phvaCard').innerHTML=`<span class="phva-card-badge" style="background:${d.bc};color:${d.tc}">${d.clausula}</span><h4>${s} — ${d.label}</h4><ul>${d.items.map(i=>`<li>${i}</li>`).join('')}</ul>`;}
+function buildImpl(){document.getElementById('implGrid').innerHTML=IMPL.map((p,i)=>`<div class="impl-card"><div class="impl-n">${i+1}</div><div class="impl-tag">${p.tag}</div><h4>${p.t}</h4><p>${p.p}</p></div>`).join('');}
+function buildAcc(){document.getElementById('accWrap').innerHTML=PRINCIP.map((r,i)=>`<div class="acc-item" id="ai${i}"><button class="acc-btn" onclick="toggleAcc(${i})"><div class="acc-left"><span class="acc-num">${r.n}</span><span class="acc-lbl">${r.t}</span></div><span class="acc-arr">▾</span></button><div class="acc-body"><div class="acc-inner"><p class="acc-desc">${r.d}</p><div class="acc-tags">${r.tags.map(t=>`<span class="acc-tag">${t}</span>`).join('')}</div></div></div></div>`).join('');}
+function toggleAcc(i){const el=document.getElementById('ai'+i);const was=el.classList.contains('open');document.querySelectorAll('.acc-item').forEach(a=>a.classList.remove('open'));if(!was)el.classList.add('open');}
+let qI=0,qScore=0,qDone=false;
+function buildQuiz(){renderQ();}
+function renderQ(){const box=document.getElementById('quizBox');if(qI>=QUIZ.length){const pct=Math.round((qScore/QUIZ.length)*100);const msg=pct>=80?'¡Excelente!':pct>=60?'Buen trabajo.':'Sigue estudiando.';box.innerHTML=`<div class="q-score" style="display:block"><div class="q-score-n">${qScore}/${QUIZ.length}</div><div class="q-score-p">${pct}% correcto — ${msg}</div><button class="cta-main" style="margin-top:1.5rem;border:none;cursor:pointer" onclick="qI=0;qScore=0;qDone=false;renderQ()"><span>Volver a intentar</span></button></div>`;return;}const q=QUIZ[qI];box.innerHTML=`<div class="q-bar-wrap"><div class="q-bar-lbl"><span>${qI+1} de ${QUIZ.length}</span><span>Puntaje: ${qScore}</span></div><div class="q-bar"><div class="q-fill" style="width:${Math.round((qI/QUIZ.length)*100)}%"></div></div></div><div class="q-text">${q.q}</div><div class="q-opts">${q.opts.map((o,i)=>`<button class="q-opt" onclick="answerQ(${i})" id="qo${i}">${o}</button>`).join('')}</div><div class="q-fb" id="qfb"></div><div class="q-nav"><button class="cta-main" id="qnxt" onclick="qI++;qDone=false;renderQ()" style="display:none;border:none;cursor:pointer"><span>Siguiente →</span></button></div>`;}
+function answerQ(i){if(qDone)return;qDone=true;const q=QUIZ[qI];document.querySelectorAll('.q-opt').forEach(b=>b.disabled=true);document.getElementById('qo'+q.a).classList.add('ok');const fb=document.getElementById('qfb');if(i===q.a){qScore++;fb.className='q-fb show ok';fb.textContent='✓ Correcto — '+q.exp;}else{document.getElementById('qo'+i).classList.add('fail');fb.className='q-fb show fail';fb.textContent='✗ Incorrecto — '+q.exp;}document.getElementById('qnxt').style.display='inline-block';}
+function buildGloss(){document.getElementById('glossGrid').innerHTML=GLOSS.map(g=>`<div class="gloss-card" data-k="${(g.t+' '+g.d).toLowerCase()}"><div class="gloss-term">${g.t}</div><div class="gloss-def">${g.d}</div></div>`).join('');}
+function filterGloss(v){const q=v.toLowerCase();document.querySelectorAll('.gloss-card').forEach(c=>c.classList.toggle('hidden',!c.dataset.k.includes(q)));}
+function setupScroll(){const prog=document.getElementById('prog');const nav=document.getElementById('mainNav');window.addEventListener('scroll',()=>{const h=document.body.scrollHeight-innerHeight;prog.style.width=(scrollY/h*100)+'%';nav.classList.toggle('scrolled',scrollY>80);},{passive:true});}
+function setupFadeUp(){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});},{threshold:.1});document.querySelectorAll('.fu').forEach(el=>obs.observe(el));}
+</script>
+</body>
+</html>
